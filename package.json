@@ -5,20 +5,25 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.24.54",
-    "gatsby-image": "^2.4.17",
-    "gatsby-plugin-manifest": "^2.4.28",
-    "gatsby-plugin-offline": "^3.2.27",
-    "gatsby-plugin-react-helmet": "^3.3.10",
-    "gatsby-plugin-sharp": "^2.6.32",
-    "gatsby-source-filesystem": "^2.3.28",
-    "gatsby-transformer-sharp": "^2.5.14",
+    "@mdx-js/mdx": "^1.6.17",
+    "apollo-server-express": "^2.17.0",
+    "express": "^4.17.1",
+    "gatsby": "^2.24.60",
+    "gatsby-image": "^2.4.18",
+    "gatsby-plugin-express": "^1.1.6",
+    "gatsby-plugin-manifest": "^2.4.29",
+    "gatsby-plugin-offline": "^3.2.28",
+    "gatsby-plugin-react-helmet": "^3.3.11",
+    "gatsby-plugin-sharp": "^2.6.36",
+    "gatsby-source-filesystem": "^2.3.30",
+    "gatsby-transformer-sharp": "^2.5.15",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0"
   },
   "devDependencies": {
+    "nodemon": "^2.0.4",
     "prettier": "2.1.1"
   },
   "keywords": [
@@ -27,6 +32,7 @@
   "license": "0BSD",
   "scripts": {
     "build": "gatsby build",
+    "dev": "nodemon server/index.js",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
