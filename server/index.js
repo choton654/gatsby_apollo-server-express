@@ -1,35 +1,33 @@
 const gatsbyExpress = require("gatsby-plugin-express")
 const express = require("express")
+const mongoose = require("mongoose")
+const router = require("./route/router")
+const cookieparser = require("cookie-parser")
+require("dotenv").config()
 const app = express()
-const { ApolloServer, gql } = require("apollo-server-express")
 
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`
+app.use(express.json())
+app.use(cookieparser())
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Db is connected"))
+  .catch(err => console.log(err))
 
-const resolvers = {
-  Query: {
-    hello: () => "Hello world!",
-  },
-}
-
-const server = new ApolloServer({ typeDefs, resolvers })
-
-app.get("/post", (req, res) => {
-  res.send("hello")
+app.get("/", (req, res) => {
+  res.end("hello")
 })
-server.applyMiddleware({ app })
 
-// serve static files before gatsbyExpress
+app.use(router)
+
 app.use(express.static("public/"))
 app.use(
   gatsbyExpress("config/gatsby-express.json", {
     publicDir: "public/",
-
-    // redirects all /path/ to /path
-    // should be used with gatsby-plugin-remove-trailing-slashes
     redirectSlashes: true,
   })
 )
