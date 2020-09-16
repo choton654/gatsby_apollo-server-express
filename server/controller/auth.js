@@ -23,6 +23,7 @@ module.exports = {
       res.status(400).json({ msg: error })
     }
   },
+
   login_post: async (req, res) => {
     const { email, password } = req.body
     const user = await User.findOne({ email })
@@ -37,6 +38,15 @@ module.exports = {
       }
     } else {
       return res.status(400).json({ error: "User not found" })
+    }
+  },
+
+  all_user: async (req, res) => {
+    try {
+      const users = await User.find({})
+      res.status(200).json(users)
+    } catch (error) {
+      console.error(error)
     }
   },
 }

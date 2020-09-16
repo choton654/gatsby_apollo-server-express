@@ -12,12 +12,6 @@
       "path": "/"
     },
     {
-      "path": "/post/"
-    },
-    {
-      "path": "/user/"
-    },
-    {
       "path": "/404.html"
     }
   ]
