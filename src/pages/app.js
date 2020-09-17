@@ -1,14 +1,17 @@
 import { Router } from "@reach/router"
 import React from "react"
-import Layout from "../components/layout"
+import Login from "../components/login"
+import Post from "../components/post"
 import User from "../components/user"
 const App = () => {
   return (
-    <Layout>
+    <div>
       <Router basepath="/app">
         <User path="/user" />
+        <Post path="/post" />
+        <Login path="/login" />
       </Router>
-    </Layout>
+    </div>
   )
 }
 

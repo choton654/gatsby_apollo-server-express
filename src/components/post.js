@@ -1,28 +1,27 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
-
-function User() {
-  const [state, setstate] = useState([])
-
+function Post() {
+  const [post, setPost] = useState([])
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/users")
+      .get("http://localhost:3000/api/post")
       .then(res => {
         console.log(res.data)
-        setstate(res.data)
+        setPost(res.data)
       })
       .catch(err => console.error(err))
   }, [])
+
   return (
     <div>
-      {state.map(user => (
-        <div key={user._id}>
-          <h1>{user.username}</h1>
-          <p>{user.email}</p>
+      {post.map(post => (
+        <div key={post._id}>
+          <h1>{post.title}</h1>
+          <p>{post.description}</p>
         </div>
       ))}
     </div>
   )
 }
 
-export default User
+export default Post

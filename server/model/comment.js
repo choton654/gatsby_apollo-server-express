@@ -9,11 +9,18 @@ const commentSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
+      required: [true, "Must be signed in first"],
+    },
+    post_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "post",
+      required: [true, "Must have a post "],
     },
   },
   { timestamps: true }
 )
 
-const Comment = new mongoose.model("comment", commentSchema)
+const Comment =
+  mongoose.models.comment || mongoose.model("comment", commentSchema)
 
 module.exports = Comment

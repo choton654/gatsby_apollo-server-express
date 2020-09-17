@@ -6,9 +6,14 @@ const likeSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
     },
+    post_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "post",
+      required: [true, "Must have a post "],
+    },
   },
   { timestamps: true }
 )
-const Like = new mongoose.model("like", likeSchema)
+const Like = mongoose.models.like || mongoose.model("like", likeSchema)
 
 module.exports = Like

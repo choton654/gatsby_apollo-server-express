@@ -15,3 +15,9 @@ exports.onCreateWebpackConfig = ({ actions }) => {
     },
   })
 }
+
+exports.createPages = function ({ actions }) {
+  const { createRedirect } = actions
+
+  createRedirect({ fromPath: "/hello", toPath: "/" })
+}

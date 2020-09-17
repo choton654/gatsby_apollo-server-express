@@ -11,26 +11,27 @@ const postSchema = new mongoose.Schema(
     description: {
       type: String,
       maxlength: 100,
+      required: [true, "Must be written something"],
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
+      required: [true, "Must be signed in first"],
     },
-    comments: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "comment",
-      },
-    ],
-    like: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "like",
-      },
-    ],
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
 
-const Post = new mongoose.model("post", postSchema)
+postSchema.virtual("comments", {
+  ref: "comment",
+  localField: "_id",
+  foreignField: "post_id",
+})
+// postSchema.virtual("likes", {
+//   ref: "like",
+//   localField: "_id",
+//   foreignField: "post_id",
+// })
+
+const Post = mongoose.models.post || mongoose.model("post", postSchema)
 module.exports = Post

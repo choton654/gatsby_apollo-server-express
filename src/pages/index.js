@@ -4,7 +4,7 @@ import React, { useEffect } from "react"
 const IndexPage = () => {
   useEffect(() => {
     axios
-      .get("/api/users")
+      .get("http://localhost:3000/api/users")
       .then(res => console.log(res.data))
       .catch(err => console.error(err))
   }, [])

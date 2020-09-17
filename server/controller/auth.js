@@ -32,13 +32,18 @@ module.exports = {
       if (foundUser) {
         const token = createToken(user._id)
         res.cookie("jwt", token, { maxAge: maxAge * 1000, httpOnly: true })
-        res.status(200).json(user)
+        res.status(200).json(token)
       } else {
         return res.status(400).json({ error: "Password not match" })
       }
     } else {
       return res.status(400).json({ error: "User not found" })
     }
+  },
+
+  logout_get: (req, res) => {
+    res.cookie("jwt", "", { maxAge: 1 })
+    res.json({ msg: "user logout" })
   },
 
   all_user: async (req, res) => {
