@@ -23,6 +23,9 @@ const Header = props => {
         <li>
           <Link to="/app/login">Login</Link>
         </li>
+        <li>
+          <Link to="/app/signup">Signup</Link>
+        </li>
       </ul>
     </nav>
   )

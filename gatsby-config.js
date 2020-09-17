@@ -11,4 +11,8 @@ module.exports = {
       options: { prefixes: [`/app/*`] },
     },
   ],
+  proxy: {
+    prefix: "/api",
+    url: "http://localhost:3000",
+  },
 }

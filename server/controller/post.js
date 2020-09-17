@@ -15,8 +15,25 @@ module.exports = {
     }
   },
 
+  singlePost_get: async (req, res) => {
+    const { id } = req.params
+    try {
+      const post = await Post.findOne({ _id: id })
+        .populate({
+          path: "user",
+          model: "user",
+          select: "_id email",
+        })
+        .populate("comments")
+        .populate("likes")
+
+      res.status(200).json(post)
+    } catch (error) {
+      res.status(400).json({ msg: error })
+    }
+  },
+
   post_get: async (req, res) => {
-    // console.log("This user is authenticated", req.user)
     try {
       const allPost = await Post.find()
         .populate({

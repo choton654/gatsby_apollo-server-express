@@ -1,26 +1,22 @@
-import axios from "axios"
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
+import { getCurrentUser } from "../context/actions"
+import { GlobalState } from "../context/state"
 
 function User() {
-  const [state, setstate] = useState([])
+  const {
+    state: { user },
+    dispatch,
+  } = GlobalState()
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/users")
-      .then(res => {
-        console.log(res.data)
-        setstate(res.data)
-      })
-      .catch(err => console.error(err))
-  }, [])
+    getCurrentUser(dispatch)
+  }, [dispatch])
   return (
     <div>
-      {state.map(user => (
-        <div key={user._id}>
-          <h1>{user.username}</h1>
-          <p>{user.email}</p>
-        </div>
-      ))}
+      <div>
+        <h1>{user.username}</h1>
+        <p>{user.email}</p>
+      </div>
     </div>
   )
 }

@@ -1,39 +1,47 @@
 import React, { useState } from "react"
-import { loginUser } from "../context/actions"
-import { GlobalState } from "../context/state"
-const Login = () => {
-  const [user, setuser] = useState({
+import { signupUser } from "../context/actions"
+const Signup = () => {
+  const [users, setUsers] = useState({
+    username: "",
     email: "",
     password: "",
   })
 
-  const { dispatch } = GlobalState()
-
   const handleChange = e => {
-    setuser({
-      ...user,
+    setUsers({
+      ...users,
       [e.target.name]: e.target.value,
     })
   }
 
   const handleSubmit = e => {
     e.preventDefault()
-    console.log(user)
-    loginUser(user, dispatch)
-    setuser({
+    // const res = await axios.post("/api/signup", users)
+    signupUser(users)
+    setUsers({
+      username: "",
       email: "",
       password: "",
     })
   }
-
   return (
     <form onSubmit={handleSubmit}>
+      <label htmlFor="username">Username</label>
+      <input
+        id="username"
+        name="username"
+        onChange={handleChange}
+        value={users.username}
+        placeholder="username"
+        required
+        type="text"
+      />
       <label htmlFor="email">Enter Email</label>
       <input
         id="email"
         name="email"
         onChange={handleChange}
-        value={user.email}
+        value={users.email}
         placeholder="email"
         required
         type="email"
@@ -43,14 +51,14 @@ const Login = () => {
         id="password"
         name="password"
         onChange={handleChange}
-        value={user.password}
+        value={users.password}
         placeholder="password"
         required
         type="password"
       />
-      <button type="submit">Log In</button>
+      <button type="submit">Sign Up</button>
     </form>
   )
 }
 
-export default Login
+export default Signup

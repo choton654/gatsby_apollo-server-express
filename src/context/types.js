@@ -1,0 +1,7 @@
+export const actionType = {
+  SET_USER: "SET_USER",
+  SET_TOKEN: "SET_TOKEN",
+  SET_POSTS: "SET_POSTS",
+  SET_POST: "SET_POST",
+  SET_SINGLE_POST: "SET_SINGLE_POST",
+}

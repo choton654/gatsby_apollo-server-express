@@ -3,9 +3,14 @@ const {
   signup_post,
   login_post,
   logout_get,
-  all_user,
+  auth_user,
 } = require("../controller/auth")
-const { post_post, post_get, post_delete } = require("../controller/post")
+const {
+  post_post,
+  post_get,
+  post_delete,
+  singlePost_get,
+} = require("../controller/post")
 const {
   comment_post,
   comment_get,
@@ -15,7 +20,8 @@ const {
 const authMiddleware = require("../middleware/authMiddleware")
 router.post("/api/signup", signup_post)
 router.post("/api/login", login_post)
-router.get("/api/users", all_user)
+router.get("/api/current", authMiddleware, auth_user)
+router.get("/api/post/:id", singlePost_get)
 router.get("/api/post", post_get)
 router.post("/api/post", authMiddleware, post_post)
 router.get("/api/comment", authMiddleware, comment_get)

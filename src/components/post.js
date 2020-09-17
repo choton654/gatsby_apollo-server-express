@@ -1,25 +1,29 @@
-import axios from "axios"
-import React, { useEffect, useState } from "react"
+import { Link } from "@reach/router"
+import React, { useEffect } from "react"
+import Postform from "../components/postform"
+import { getPosts } from "../context/actions"
+import { GlobalState } from "../context/state"
+
 function Post() {
-  const [post, setPost] = useState([])
+  const {
+    state: { posts },
+    dispatch,
+  } = GlobalState()
+
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/post")
-      .then(res => {
-        console.log(res.data)
-        setPost(res.data)
-      })
-      .catch(err => console.error(err))
-  }, [])
+    getPosts(dispatch)
+  }, [dispatch])
 
   return (
     <div>
-      {post.map(post => (
+      {posts.map(post => (
         <div key={post._id}>
-          <h1>{post.title}</h1>
-          <p>{post.description}</p>
+          <Link to={`/app/post/${post._id}`}>
+            <h1>{post.title}</h1>
+          </Link>
         </div>
       ))}
+      <Postform />
     </div>
   )
 }

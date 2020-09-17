@@ -1,14 +1,16 @@
 import React from "react"
+import reducer, { initState } from "../context/reducer"
+import StateProvider from "../context/state"
 import Footer from "./footer"
 import Header from "./header"
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <StateProvider initState={initState} reducer={reducer}>
       <Header />
       {children}
       <Footer />
-    </div>
+    </StateProvider>
   )
 }
 
