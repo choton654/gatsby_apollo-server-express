@@ -1,6 +1,17 @@
 const Comment = require("../model/comment")
 const Post = require("../model/post")
 
+const handleError = error => {
+  let err = {}
+  if (error._message === "comment validation failed") {
+    Object.values(error.errors).forEach(({ properties: { path, message } }) => {
+      err[path] = message
+    })
+  }
+  console.log(err)
+  return err
+}
+
 module.exports = {
   comment_post: async (req, res) => {
     const { body } = req.body
@@ -9,7 +20,7 @@ module.exports = {
       const post = await Post.findById(postid)
       if (post) {
         const newComment = await Comment.create({
-          body,
+          body: body.trim(),
           post_id: postid,
           user: req.user,
         })
@@ -20,7 +31,8 @@ module.exports = {
       }
     } catch (error) {
       console.error(error)
-      res.status(400).json({ msg: error })
+      const err = handleError(error)
+      res.status(400).json(err)
     }
   },
 

@@ -7,7 +7,10 @@ const Postform = () => {
     description: "",
   })
 
-  const { dispatch } = GlobalState()
+  const {
+    dispatch,
+    state: { error },
+  } = GlobalState()
 
   const handleChange = e => {
     setPost({
@@ -38,6 +41,7 @@ const Postform = () => {
         required
         type="text"
       />
+      {error.title && <div>{error.title}</div>}
       <br />
       <label htmlFor="desc">Description</label>
       <br />
@@ -50,7 +54,9 @@ const Postform = () => {
         required
         type="text"
       />
+      {error.description && <div>{error.description}</div>}
       <button type="submit">Submit</button>
+      {error.user && <div>{error.user}</div>}
     </form>
   )
 }

@@ -6,7 +6,6 @@ const postSchema = new mongoose.Schema(
       type: String,
       maxlength: 50,
       required: [true, "Give a title"],
-      unique: [true, "title must be unique"],
     },
     description: {
       type: String,

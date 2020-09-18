@@ -1,10 +1,11 @@
 import React, { useEffect } from "react"
-import { getSinglePost } from "../context/actions"
+import { deleteComment, getSinglePost } from "../context/actions"
 import { GlobalState } from "../context/state"
+import Comment from "./comment"
 
 function SinglePost(props) {
   const {
-    state: { post },
+    state: { post, error },
     dispatch,
   } = GlobalState()
   console.log(post)
@@ -20,7 +21,23 @@ function SinglePost(props) {
         Description: <p>{post.description}</p>
       </strong>
       <h4>CreatedBy: {post.user?.email}</h4>
-      <h5>Comments: {post.comments?.length}</h5>
+      <div>
+        Comments:{" "}
+        {post.comments?.map(comment => (
+          <div>
+            <h2>{comment.body}</h2>
+            <button
+              onClick={() => {
+                deleteComment(comment._id, dispatch)
+              }}
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
+      <Comment postid={props.id} />
+      {error.msg && <div>{error.msg}</div>}
     </div>
   )
 }

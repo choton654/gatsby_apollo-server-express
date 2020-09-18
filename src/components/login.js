@@ -7,7 +7,10 @@ const Login = () => {
     password: "",
   })
 
-  const { dispatch } = GlobalState()
+  const {
+    dispatch,
+    state: { error },
+  } = GlobalState()
 
   const handleChange = e => {
     setuser({
@@ -49,6 +52,7 @@ const Login = () => {
         type="password"
       />
       <button type="submit">Log In</button>
+      {error && <div>{error.error}</div>}
     </form>
   )
 }

@@ -26,17 +26,29 @@ export const loginUser = (user, dispatch) => {
       getCurrentUser(dispatch)
       navigate("/app/user")
     })
-    .catch(err => console.error(err))
+    .catch(err => {
+      console.error(err)
+      dispatch({
+        type: actionType.SET_ERROR,
+        payload: err.response.data,
+      })
+    })
 }
 
-export const signupUser = user => {
+export const signupUser = (user, dispatch) => {
   axios
     .post("/api/signup", user)
     .then(res => {
       console.log(res.data)
       navigate("/app/login")
     })
-    .catch(err => console.error(err))
+    .catch(err => {
+      console.error(err)
+      dispatch({
+        type: actionType.SET_ERROR,
+        payload: err.response.data,
+      })
+    })
 }
 
 export const getPosts = dispatch => {
@@ -47,6 +59,19 @@ export const getPosts = dispatch => {
       dispatch({
         type: actionType.SET_POSTS,
         payload: res.data,
+      })
+    })
+    .catch(err => console.error(err))
+}
+
+export const deletePost = (id, dispatch) => {
+  axios
+    .delete(`/api/post/${id}`)
+    .then(res => {
+      console.log(res.data)
+      dispatch({
+        type: actionType.DELETE_POST,
+        payload: id,
       })
     })
     .catch(err => console.error(err))
@@ -76,6 +101,44 @@ export const createPosts = (post, dispatch) => {
       })
       navigate("/app/post")
     })
+    .catch(err => {
+      console.error(err)
+      dispatch({
+        type: actionType.SET_ERROR,
+        payload: err.response.data,
+      })
+    })
+}
+
+export const createComment = (postid, comment, dispatch) => {
+  axios
+    .post(`/api/${postid}/comment`, comment)
+    .then(res => {
+      console.log(res.data)
+      dispatch({
+        type: actionType.SET_COMMENT,
+        payload: res.data,
+      })
+    })
+    .catch(err => {
+      console.error(err)
+      dispatch({
+        type: actionType.SET_ERROR,
+        payload: err.response.data,
+      })
+    })
+}
+
+export const deleteComment = (id, dispatch) => {
+  axios
+    .delete(`/api/comment/${id}`)
+    .then(res => {
+      console.log(res)
+      dispatch({
+        type: actionType.DELETE_COMMENT,
+        payload: id,
+      })
+    })
     .catch(err => console.error(err))
 }
 
@@ -87,4 +150,15 @@ export const getCurrentUser = dispatch => {
       dispatch({ type: actionType.SET_USER, payload: res.data })
     })
     .catch(err => console.error(err))
+}
+
+export const logoutUser = dispatch => {
+  axios
+    .get("/api/logout")
+    .then(res => {
+      localStorage.removeItem("token")
+    })
+    .catch(err => console.error(err))
+  setAuthToken(false, dispatch)
+  dispatch({ type: actionType.LOGOUT })
 }

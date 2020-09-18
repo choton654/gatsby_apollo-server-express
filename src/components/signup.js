@@ -1,11 +1,17 @@
 import React, { useState } from "react"
 import { signupUser } from "../context/actions"
+import { GlobalState } from "../context/state"
 const Signup = () => {
   const [users, setUsers] = useState({
     username: "",
     email: "",
     password: "",
   })
+
+  const {
+    dispatch,
+    state: { error },
+  } = GlobalState()
 
   const handleChange = e => {
     setUsers({
@@ -17,7 +23,7 @@ const Signup = () => {
   const handleSubmit = e => {
     e.preventDefault()
     // const res = await axios.post("/api/signup", users)
-    signupUser(users)
+    signupUser(users, dispatch)
     setUsers({
       username: "",
       email: "",
@@ -57,6 +63,9 @@ const Signup = () => {
         type="password"
       />
       <button type="submit">Sign Up</button>
+      {error.username && <div>{error.username}</div>}
+      {error.email && <div>{error.email}</div>}
+      {error.password && <div>{error.password}</div>}
     </form>
   )
 }

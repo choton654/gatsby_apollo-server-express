@@ -1,17 +1,30 @@
 const Post = require("../model/post")
 
+const handleError = error => {
+  let err = {}
+  if (error._message === "post validation failed") {
+    Object.values(error.errors).forEach(({ properties: { path, message } }) => {
+      err[path] = message
+    })
+  }
+  console.log(err)
+  return err
+}
+
 module.exports = {
   post_post: async (req, res) => {
     const { title, description } = req.body
     try {
       const newPost = await Post.create({
-        title,
-        description,
+        title: title.trim(),
+        description: description.trim(),
         user: req.user,
       })
       res.status(200).json(newPost)
     } catch (error) {
-      res.status(400).json({ msg: error })
+      console.error(error.errors)
+      const err = handleError(error)
+      res.status(400).json(err)
     }
   },
 

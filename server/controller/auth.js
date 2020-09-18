@@ -1,6 +1,18 @@
 const bcrypt = require("bcrypt")
 const User = require("../model/user")
 const jwt = require("jsonwebtoken")
+const { isLength } = require("validator")
+
+const handleError = error => {
+  let err = {}
+  if (error._message === "user validation failed") {
+    Object.values(error.errors).forEach(({ properties: { path, message } }) => {
+      err[path] = message
+    })
+  }
+  console.log(err)
+  return err
+}
 
 const maxAge = 3 * 24 * 60 * 60
 const createToken = id => {
@@ -11,12 +23,17 @@ const createToken = id => {
 module.exports = {
   signup_post: async (req, res) => {
     const { username, email, password } = req.body
+    if (!isLength(password, { min: 6 })) {
+      return res
+        .status(400)
+        .json({ password: "Password must be 6 charecter long" })
+    }
     const salt = await bcrypt.genSalt()
     const newPassword = await bcrypt.hash(password, salt)
     try {
       const existingUser = await User.findOne({ email })
       if (existingUser) {
-        return res.status(400).json({ msg: "User already exists" })
+        return res.status(400).json({ email: "User already exists" })
       }
 
       const user = await User.create({ username, email, password: newPassword })
@@ -25,8 +42,9 @@ module.exports = {
 
       res.status(200).json(user)
     } catch (error) {
-      console.error(error)
-      res.status(400).json({ msg: error })
+      // console.error(error.errors.email.message)
+      const err = handleError(error)
+      res.status(400).json(err)
     }
   },
 

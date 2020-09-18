@@ -11,11 +11,12 @@ function User() {
   useEffect(() => {
     getCurrentUser(dispatch)
   }, [dispatch])
+
   return (
     <div>
       <div>
-        <h1>{user.username}</h1>
-        <p>{user.email}</p>
+        <h1>{user?.username}</h1>
+        <p>{user?.email}</p>
       </div>
     </div>
   )
