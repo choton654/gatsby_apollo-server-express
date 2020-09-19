@@ -74,7 +74,13 @@ export const deletePost = (id, dispatch) => {
         payload: id,
       })
     })
-    .catch(err => console.error(err))
+    .catch(err => {
+      console.error(err)
+      dispatch({
+        type: actionType.SET_ERROR,
+        payload: err.response.data,
+      })
+    })
 }
 
 export const getSinglePost = (id, dispatch) => {
@@ -139,7 +145,13 @@ export const deleteComment = (id, dispatch) => {
         payload: id,
       })
     })
-    .catch(err => console.error(err))
+    .catch(err => {
+      console.error(err)
+      dispatch({
+        type: actionType.SET_ERROR,
+        payload: err.response.data,
+      })
+    })
 }
 
 export const getCurrentUser = dispatch => {

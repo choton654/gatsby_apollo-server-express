@@ -3,10 +3,8 @@ const express = require("express")
 const mongoose = require("mongoose")
 const router = require("./route/router")
 const cors = require("cors")
-const path = require("path")
 const port = process.env.PORT || 3000
 const cookieparser = require("cookie-parser")
-const authMiddleware = require("./middleware/authMiddleware")
 require("dotenv").config()
 const app = express()
 
@@ -24,10 +22,7 @@ mongoose
   .then(() => console.log("Db is connected"))
   .catch(err => console.log(err))
 
-gatsby.prepare({ app, pathPrefix: "/gatsby" }, () => {
-  app.get("/user", authMiddleware, (req, res) => {
-    res.end("hello")
-  })
+gatsby.prepare({ app }, () => {
   app.use(router)
 })
 

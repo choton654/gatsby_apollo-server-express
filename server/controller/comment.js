@@ -48,13 +48,13 @@ module.exports = {
   comment_delete: async (req, res) => {
     const { id } = req.params
     try {
-      const comment = await Comment.findOne({ user: req.user._id })
-      if (comment) {
-        await Comment.findByIdAndDelete(id)
-        res.status(200).json({ msg: "Comment deleted" })
-      } else {
+      const comment = await Comment.findById(id)
+
+      if (comment.user.toString() !== req.user.id) {
         return res.status(400).json({ msg: "Unauthorized" })
       }
+      comment.remove()
+      res.status(200).json({ msg: "Comment deleted" })
     } catch (error) {
       console.error(error)
       res.status(500).json({ msg: error })

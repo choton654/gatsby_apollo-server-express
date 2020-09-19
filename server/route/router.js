@@ -18,6 +18,7 @@ const {
 } = require("../controller/comment")
 
 const authMiddleware = require("../middleware/authMiddleware")
+
 router.post("/api/signup", signup_post)
 router.post("/api/login", login_post)
 router.get("/api/current", authMiddleware, auth_user)

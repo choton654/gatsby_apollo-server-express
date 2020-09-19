@@ -66,13 +66,13 @@ module.exports = {
   post_delete: async (req, res) => {
     const { id } = req.params
     try {
-      const post = await Post.findOne({ user: req.user._id })
-      if (post) {
-        await Post.findByIdAndDelete(id)
-        res.status(200).json({ msg: "Post deleted" })
-      } else {
+      const post = await Post.findById(id)
+
+      if (post.user.toString() !== req.user.id) {
         return res.status(400).json({ msg: "Unauthorize" })
       }
+      post.remove()
+      res.status(200).json({ msg: "Post deleted" })
     } catch (error) {
       console.error(error)
       res.status(500).json({ msg: error })

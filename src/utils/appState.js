@@ -1,4 +1,5 @@
 import axios from "axios"
+import jwt_decode from "jwt-decode"
 
 export const appState = () => {
   let token
@@ -7,14 +8,13 @@ export const appState = () => {
     token = localStorage.getItem("token")
     if (token) {
       axios.defaults.headers.common["Authorization"] = token
+      const currentTime = Date.now() / 1000
+      const decode = jwt_decode(token)
+      if (decode.exp < currentTime) {
+        token = null
+        window.location.hash = "app/login"
+      }
     }
-    // const currentTime = Date.now() / 1000;
-    // if (decode.exp < currentTime) {
-    //   decode = {};
-    //   token = null;
-    //   profile = null;
-    //   window.location.href = '/Login';
-    // }
   }
 
   return {
