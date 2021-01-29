@@ -7,7 +7,6 @@
   "dependencies": {
     "@mdx-js/mdx": "^1.6.17",
     "@reach/router": "^1.3.4",
-    "apollo-server-express": "^2.17.0",
     "axios": "^0.20.0",
     "bcrypt": "^5.0.0",
     "cookie-parser": "^1.4.5",
@@ -17,7 +16,6 @@
     "gatsby": "^2.24.60",
     "gatsby-plugin-create-client-paths": "^2.3.11",
     "gatsby-plugin-nodejs": "^0.7.0",
-    "gatsby-source-multi-api": "^1.0.5",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.0.0-beta.2",
     "mongoose": "^5.10.5",
@@ -36,8 +34,8 @@
   "license": "0BSD",
   "scripts": {
     "build": "gatsby build",
-    "dev": "nodemon server/index.js",
     "develop": "gatsby develop",
+    "dev": "node server/index.js",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",

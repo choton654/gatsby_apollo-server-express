@@ -22,7 +22,7 @@ mongoose
   .then(() => console.log("Db is connected"))
   .catch(err => console.log(err))
 
-gatsby.prepare({ app }, () => {
+gatsby.prepare({ app, pathPrefix: "/gatsby" }, () => {
   app.use(router)
 })
 
